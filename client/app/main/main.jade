@@ -1,10 +1,11 @@
 .ui.segment
     div(ng-include='"components/navbar/navbar.html"')
-    .ui.small.header Sort
-    span.ui.small.input
-        input(type="text" placeholder="Enter field to sort by" ng-model="sortKey")
-    span.ui.blue.small.button(ng-click="reverse()") Reverse Order
-    .ui.pointing.left.label Currently {{order}}
+    div(ng-show="grid")
+        .ui.small.header Sort
+        span.ui.small.input
+            input(type="text" placeholder="Enter field to sort by" ng-model="sortKey")
+        span.ui.blue.small.button(ng-click="reverse()") Reverse Order
+        .ui.pointing.left.label Currently {{order}}
 
     .ui.small.header Search
     span.ui.small.input
@@ -13,7 +14,8 @@
         input(type="text" placeholder="2nd Hero To Compare" ng-model="searchQuery.name2")
     div
     .ui.green.button(ng-click="grid = !grid") Switch View (Table or Grid)
-    div Click on skills to toggle details.
+    div(ng-show="grid") Click on skills to toggle details.
+    div(ng-show="!grid") Click on table headers to sort.
 .ui.six.column.divided.grid(ng-show="grid")
     .row
         .column(ng-repeat = "actor in champs  | orderBy:getSortValue:reverseSort | filter:search " ng-if="$index <= 5")
@@ -36,10 +38,10 @@
             //            span.ui.tiny.header  {{actor.playerData.statHealth}}
             .ui.mini.divided.list
                 .ui Stats
-                .item(ng-repeat="(stat, value) in actor.actorStats" ng-if="statsKeysExcludes.indexOf(stat) == -1")
+                .item(ng-repeat="(stat, value) in actor.actorStats" ng-if="!statsKeysExcludes[stat] && convertTable[stat]")
                         .content
-                            | {{stat}} :
-                            span.ui.tiny.header  {{value}}
+                            | {{convertTable[stat]}} :
+                            span.ui.tiny.header  {{value}} {{perLevel(stat, actor.actorStats)}}
                 .item
                     .content
                         | collisionRadius :
@@ -48,7 +50,7 @@
                 .ui.small.red.button(ng-click="showSkill1 = !showSkill1") (Q) {{actor.spell1.spellName}}
                 div(ng-show="showSkill1")
                     .ui {{actor.spell1.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell1" ng-if="spellKeys.indexOf(stat) > -1")
+                    .item(ng-repeat="(stat, value) in actor.spell1" ng-if="spellKeys[stat]")
                         .content
                             | {{stat}} :
                             span.ui.tiny.header  {{value}}
@@ -56,7 +58,7 @@
                 .ui.small.green.button(ng-click="showSkill2 = !showSkill2") (W) {{actor.spell2.spellName}}
                 div(ng-show="showSkill2")
                     .ui {{actor.spell2.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell2" ng-if="spellKeys.indexOf(stat) > -1")
+                    .item(ng-repeat="(stat, value) in actor.spell2" ng-if="spellKeys[stat]")
                         .content
                             | {{stat}} :
                             span.ui.tiny.header  {{value}}
@@ -64,7 +66,7 @@
                 .ui.small.white.button(ng-click="showSkill3 = !showSkill3") (E) {{actor.spell3.spellName}}
                 div(ng-show="showSkill3")
                     .ui {{actor.spell3.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell3" ng-if="spellKeys.indexOf(stat) > -1")
+                    .item(ng-repeat="(stat, value) in actor.spell3" ng-if="spellKeys[stat]")
                         .content
                             | {{stat}} :
                             span.ui.tiny.header  {{value}}
@@ -72,7 +74,7 @@
                 .ui.small.blue.button(ng-click="showSkill4 = !showSkill4") (Passive) {{actor.spell4.spellName}}
                 div(ng-show="showSkill4")
                     .ui {{actor.spell4.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell4" ng-if="spellKeys.indexOf(stat) > -1")
+                    .item(ng-repeat="(stat, value) in actor.spell4" ng-if="spellKeys[stat]")
                         .content
                             | {{stat}} :
                             span.ui.tiny.header  {{value}}
@@ -98,10 +100,10 @@
             //            span.ui.tiny.header  {{actor.playerData.statHealth}}
             .ui.mini.divided.list
                 .ui Stats
-                .item(ng-repeat="(stat, value) in actor.actorStats" ng-if="statsKeysExcludes.indexOf(stat) == -1")
+                .item(ng-repeat="(stat, value) in actor.actorStats" ng-if="!statsKeysExcludes[stat] && convertTable[stat]")
                     .content
-                        | {{stat}} :
-                        span.ui.tiny.header  {{value}}
+                        | {{convertTable[stat]}} :
+                        span.ui.tiny.header  {{value}} {{perLevel(stat, actor.actorStats)}}
                 .item
                     .content
                         | collisionRadius :
@@ -110,7 +112,7 @@
                 .ui.small.red.button(ng-click="showSkill1 = !showSkill1") (Q) {{actor.spell1.spellName}}
                 div(ng-show="showSkill1")
                     .ui {{actor.spell1.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell1" ng-if="spellKeys.indexOf(stat) > -1")
+                    .item(ng-repeat="(stat, value) in actor.spell1" ng-if="spellKeys[stat]")
                         .content
                             | {{stat}} :
                             span.ui.tiny.header  {{value}}
@@ -118,7 +120,7 @@
                 .ui.small.green.button(ng-click="showSkill2 = !showSkill2") (W) {{actor.spell2.spellName}}
                 div(ng-show="showSkill2")
                     .ui {{actor.spell2.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell2" ng-if="spellKeys.indexOf(stat) > -1")
+                    .item(ng-repeat="(stat, value) in actor.spell2" ng-if="spellKeys[stat]")
                         .content
                             | {{stat}} :
                             span.ui.tiny.header  {{value}}
@@ -126,7 +128,7 @@
                 .ui.small.white.button(ng-click="showSkill3 = !showSkill3") (E) {{actor.spell3.spellName}}
                 div(ng-show="showSkill3")
                     .ui {{actor.spell3.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell3" ng-if="spellKeys.indexOf(stat) > -1")
+                    .item(ng-repeat="(stat, value) in actor.spell3" ng-if="spellKeys[stat]")
                         .content
                             | {{stat}} :
                             span.ui.tiny.header  {{value}}
@@ -134,14 +136,14 @@
                 .ui.small.blue.button(ng-click="showSkill4 = !showSkill4") (Passive) {{actor.spell4.spellName}}
                 div(ng-show="showSkill4")
                     .ui {{actor.spell4.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell4" ng-if="spellKeys.indexOf(stat) > -1")
+                    .item(ng-repeat="(stat, value) in actor.spell4" ng-if="spellKeys[stat]")
                         .content
                             | {{stat}} :
                             span.ui.tiny.header  {{value}}
 
     .row
         .column(ng-repeat = "actor in champs  | orderBy:getSortValue:reverseSort |filter:search" ng-if="$index > 11" )
-            h4.ui.top.attached.header {{actor.name}}
+            h4.ui.top.attached.header {{actor.playerData.playerDisplayName}}
             .ui.green.horizontal.label Attack Type | {{actor.attackType}}
             .ui.blue.horizontal.label Roles | {{actor.role1}} {{actor.role2}}
             //.ui.mini.divided.list
@@ -160,10 +162,10 @@
             //            span.ui.tiny.header  {{actor.playerData.statHealth}}
             .ui.mini.divided.list
                 .ui Stats
-                .item(ng-repeat="(stat, value) in actor.actorStats" ng-if="statsKeysExcludes.indexOf(stat) == -1")
+                .item(ng-repeat="(stat, value) in actor.actorStats" ng-if="!statsKeysExcludes[stat] && convertTable[stat]")
                     .content
-                        | {{stat}} :
-                        span.ui.tiny.header  {{value}}
+                        | {{convertTable[stat]}} :
+                        span.ui.tiny.header  {{value}} {{perLevel(stat, actor.actorStats)}}
                 .item
                     .content
                         | collisionRadius :
@@ -172,7 +174,7 @@
                 .ui.small.red.button(ng-click="showSkill1 = !showSkill1") (Q) {{actor.spell1.spellName}}
                 div(ng-show="showSkill1")
                     .ui {{actor.spell1.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell1" ng-if="spellKeys.indexOf(stat) > -1")
+                    .item(ng-repeat="(stat, value) in actor.spell1" ng-if="spellKeys[stat]")
                         .content
                             | {{stat}} :
                             span.ui.tiny.header  {{value}}
@@ -180,7 +182,7 @@
                 .ui.small.green.button(ng-click="showSkill2 = !showSkill2") (W) {{actor.spell2.spellName}}
                 div(ng-show="showSkill2")
                     .ui {{actor.spell2.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell2" ng-if="spellKeys.indexOf(stat) > -1")
+                    .item(ng-repeat="(stat, value) in actor.spell2" ng-if="spellKeys[stat]")
                         .content
                             | {{stat}} :
                             span.ui.tiny.header  {{value}}
@@ -188,7 +190,7 @@
                 .ui.small.white.button(ng-click="showSkill3 = !showSkill3") (E) {{actor.spell3.spellName}}
                 div(ng-show="showSkill3")
                     .ui {{actor.spell3.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell3" ng-if="spellKeys.indexOf(stat) > -1")
+                    .item(ng-repeat="(stat, value) in actor.spell3" ng-if="spellKeys[stat]")
                         .content
                             | {{stat}} :
                             span.ui.tiny.header  {{value}}
@@ -196,18 +198,18 @@
                 .ui.small.blue.button(ng-click="showSkill4 = !showSkill4") (Passive) {{actor.spell4.spellName}}
                 div(ng-show="showSkill4")
                     .ui {{actor.spell4.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell4" ng-if="spellKeys.indexOf(stat) > -1")
+                    .item(ng-repeat="(stat, value) in actor.spell4" ng-if="spellKeys[stat]")
                         .content
                             | {{stat}} :
                             span.ui.tiny.header  {{value}}
 
 
-table.ui.small.compact.table.segment(ng-show="!grid")
+table.ui.sortable.small.compact.table.segment(ng-if="!grid")
     thead
         tr
-            th.ui.mini Name
-            th.ui.mini(ng-repeat="stat in statsKeys()") {{stat}}
+            th.ui.mini(ng-click="setTableSort()" ng-class="setTableClass()") Name
+            th.ui.mini(ng-repeat="stat in statsKeys()" ng-if="convertTable[stat]" ng-click="setTableSort(stat)" ng-class="setTableClass(stat)") {{convertTable[stat]}}
     tbody
         tr(ng-repeat="actor in champs  | orderBy:getSortValue:reverseSort |filter:search")
             td {{actor.playerData.playerDisplayName}}
-            td(ng-repeat="stat in statsKeys()") {{actor.actorStats[stat]}}
+            td(ng-repeat="stat in statsKeys()" ng-if="convertTable[stat]") {{actor.actorStats[stat]}} {{perLevel(stat, actor.actorStats)}}
