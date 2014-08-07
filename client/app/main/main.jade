@@ -13,12 +13,12 @@
     span.ui.small.input
         input(type="text" placeholder="2nd Hero To Compare" ng-model="searchQuery.name2")
     div
-    .ui.green.button(ng-click="grid = !grid") Switch View (Table or Grid)
+    .ui.green.button(ng-click="grid = !grid; sortKey = undefined") Switch View (Table or Grid)
     div(ng-show="grid") Click on skills to toggle details.
     div(ng-show="!grid") Click on table headers to sort.
 .ui.six.column.divided.grid(ng-show="grid")
     .row
-        .column(ng-repeat = "actor in champs  | orderBy:getSortValue:reverseSort | filter:search " ng-if="$index <= 5")
+        .column(ng-repeat = "actor in champs  | filter:search | orderBy:getSortValue:reverseSort  " ng-if="$index <= 5")
             h4.ui.top.attached.header {{actor.playerData.playerDisplayName}}
             .ui.green.horizontal.label Attack Type | {{actor.attackType}}
             .ui.blue.horizontal.label Roles | {{actor.role1}} {{actor.role2}}
@@ -40,7 +40,7 @@
                 .ui Stats
                 .item(ng-repeat="(stat, value) in actor.actorStats" ng-if="!statsKeysExcludes[stat] && convertTable[stat]")
                         .content
-                            | {{convertTable[stat]}} :
+                            span(title="{{stat}}") {{convertTable[stat]}} :
                             span.ui.tiny.header  {{value}} {{perLevel(stat, actor.actorStats)}}
                 .item
                     .content
@@ -80,7 +80,7 @@
                             span.ui.tiny.header  {{value}}
 
     .row
-        .column(ng-repeat = "actor in champs  | orderBy:getSortValue:reverseSort | filter:search" ng-if="$index > 5 && $index <= 11")
+        .column(ng-repeat = "actor in champs  | filter:search | orderBy:getSortValue:reverseSort" ng-if="$index > 5 && $index <= 11")
             h4.ui.top.attached.header {{actor.playerData.playerDisplayName}}
             .ui.green.horizontal.label Attack Type | {{actor.attackType}}
             .ui.blue.horizontal.label Roles | {{actor.role1}} {{actor.role2}}
@@ -142,7 +142,7 @@
                             span.ui.tiny.header  {{value}}
 
     .row
-        .column(ng-repeat = "actor in champs  | orderBy:getSortValue:reverseSort |filter:search" ng-if="$index > 11" )
+        .column(ng-repeat = "actor in champs  | filter:search | orderBy:getSortValue:reverseSort " ng-if="$index > 11" )
             h4.ui.top.attached.header {{actor.playerData.playerDisplayName}}
             .ui.green.horizontal.label Attack Type | {{actor.attackType}}
             .ui.blue.horizontal.label Roles | {{actor.role1}} {{actor.role2}}

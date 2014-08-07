@@ -5,7 +5,10 @@ angular.module 'vagrantApp'
 .controller 'MainCtrl', ($scope, $http, socket, Champions) ->
   $scope.champs = Champions.championsData
   $scope.grid = true
-  $scope.searchQuery = {}
+  $scope.searchQuery = {
+    name: ''
+    name2: ''
+  }
   $scope.sortKey = undefined
   $scope.reverseSort = false
   $scope.order = 'Ascending'
@@ -32,7 +35,8 @@ angular.module 'vagrantApp'
       return champ.playerData.playerDisplayName
   $scope.search = (champion)->
     if $scope.searchQuery.name
-        return champion.playerData.playerDisplayName.indexOf($scope.searchQuery.name) > -1 or champion.playerData.playerDisplayName.indexOf($scope.searchQuery.name2) > -1
+      decision = champion.playerData.playerDisplayName.indexOf($scope.searchQuery.name) > -1 or ($scope.searchQuery.name2.length > 1 and champion.playerData.playerDisplayName.indexOf($scope.searchQuery.name2) > -1)
+      return decision
     else
       return true
   $scope.spellKeys = {
@@ -114,4 +118,3 @@ angular.module 'vagrantApp'
     perLevelStat = stat + 'PerLevel'
     if actorStats[perLevelStat]
       return ' (+' + actorStats[perLevelStat] + ')'
-  console.log typeof $scope.champs
