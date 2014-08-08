@@ -3,6 +3,8 @@
 
 angular.module 'vagrantApp'
 .controller 'MainCtrl', ($scope, $http, socket, Champions) ->
+
+  $scope.lvl = 1
   $scope.sortButton = 'Reverse Order'
   $scope.champs = Champions.championsData
   $scope.grid = true
@@ -32,7 +34,7 @@ angular.module 'vagrantApp'
   $scope.getSortValue = (champ)->
     if $scope.sortKey
       sortKey = $scope.convertReverse($scope.sortKey)
-      return parseFloat(champ.actorStats[sortKey])
+      return parseFloat($scope.perLevelV(sortKey, champ.actorStats))
     else
       return champ.playerData.playerDisplayName
   $scope.search = (champion)->
@@ -123,6 +125,18 @@ angular.module 'vagrantApp'
     perLevelStat = stat + 'PerLevel'
     if actorStats[perLevelStat]
       return ' (+' + actorStats[perLevelStat] + ')'
+  $scope.perLevelV = (stat, actorStats)->
+    value = actorStats[stat]
+    perLevelStat = stat + 'PerLevel'
+    if actorStats[perLevelStat]
+      if $scope.lvl > 0
+        lvl = $scope.lvl - 1
+      else
+        lvl = 0
+      return (parseInt(value) + lvl*actorStats[perLevelStat]).toString()
+    else
+      return value
+
   $scope.switchView = ->
     console.log 'switchingView'
     $scope.grid = !$scope.grid

@@ -1,93 +1,84 @@
-    .ui.connected.items
-        .item
-            .ui.small.header Search
-            span.ui.small.input
-                input(type="text" placeholder="Hero Name" ng-model="searchQuery.name")
-            span.ui.small.input
-                input(type="text" placeholder="2nd Hero To Compare" ng-model="searchQuery.name2")
-            div
-        .item
-            .ui.small.header(ng-class="{grey: !grid}") Sort
-            span.ui.small.input
-                input(type="text" ng-show="grid" placeholder="Enter field to sort by" ng-model="sortKey")
-            span.ui.blue.small.button(ng-click="reverse()" ng-class="{disabled: !grid}") {{sortButton}}
-            .ui.pointing.left.label(ng-show="grid") Currently {{order}}
-        .item
-            .ui.small.header(ng-show="grid") Click on skills to toggle details.
-            .ui.small.header(ng-show="!grid") Click on table headers to sort.
-            .fluid.ui.green.button(ng-click="switchView()") Switch View
-                |(Table or Grid)
-.ui.stackable.items(ng-show="grid")
-        .item.champs(ng-repeat = "actor in champs  | filter:search | orderBy:getSortValue:reverseSort track by actor.name")
-            h4.ui.black.tiny.top.attached.header {{actor.playerData.playerDisplayName}}
-            p
-            .ui.green Attack Type | {{actor.attackType}}
-            .ui.blue Roles | {{actor.role1}} {{actor.role2}}
-            //special stats. unclear what they represent.
-            //.ui.mini.divided.list
-            //    .ui Special Stats
-            //    .item
-            //        .content
-            //            | attack :
-            //            span.ui.tiny.header  {{actor.playerData.statAttack}}
-            //    .item
-            //        .content
-            //            | spell :
-            //            span.ui.tiny.header  {{actor.playerData.statSpell}}
-            //    .item
-            //        .content
-            //            | health :
-            //            span.ui.tiny.header  {{actor.playerData.statHealth}}
-            .ui.mini.divided.list
-                .ui Stats
-                .item(ng-repeat="(stat, value) in actor.actorStats track by stat" ng-if="!statsKeysExcludes[stat] && convertTable[stat]" title="{{stat}}")
-                        .content
-                            span {{convertTable[stat]}} :
-                            span.ui.tiny.header  {{value}} {{perLevel(stat, actor.actorStats)}}
-                .item
-                    .content
-                        | collisionRadius :
-                        span.ui.tiny.header {{actor.collisionRadius}}
-            .ui.mini.divided.list
-                .ui.tiny.red.button(ng-click="showSkill1 = !showSkill1") (Q) {{actor.spell1.spellName}}
-                div(ng-show="showSkill1")
-                    .ui {{actor.spell1.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell1 track by stat" ng-show="spellKeys[stat]")
-                        .content
-                            | {{stat}} :
-                            span.ui.tiny.header  {{value}}
-            .ui.mini.divided.list
-                .ui.tiny.green.button(ng-click="showSkill2 = !showSkill2") (W) {{actor.spell2.spellName}}
-                div(ng-show="showSkill2")
-                    .ui {{actor.spell2.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell2 track by stat" ng-show="spellKeys[stat]")
-                        .content
-                            | {{stat}} :
-                            span.ui.tiny.header  {{value}}
-            .ui.mini.divided.list
-                .ui.tiny.white.button(ng-click="showSkill3 = !showSkill3") (E) {{actor.spell3.spellName}}
-                div(ng-show="showSkill3")
-                    .ui {{actor.spell3.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell3 track by stat" ng-show="spellKeys[stat]")
-                        .content
-                            | {{stat}} :
-                            span.ui.tiny.header  {{value}}
-            .ui.mini.divided.list
-                .ui.tiny.blue.button(ng-click="showSkill4 = !showSkill4") (Passive) {{actor.spell4.spellName}}
-                div(ng-show="showSkill4")
-                    .ui {{actor.spell4.spellShortDescription}}
-                    .item(ng-repeat="(stat, value) in actor.spell4 track by stat" ng-show="spellKeys[stat]")
-                        .content
-                            | {{stat}} :
-                            span.ui.tiny.header  {{value}}
+.ui.connected.items
+    div#switchViewButtonItem.item
+        .fluid.ui.green.button(ng-click="switchView()") Switch View
+    .item
+        div Search
+        span.ui.mini.fluid.input
+            input(type="text" placeholder="Hero Name" ng-model="searchQuery.name")
+        span.ui.mini.fluid.input
+            input(type="text" placeholder="2nd Hero To Compare" ng-model="searchQuery.name2")
+        div
+    div#heroLevelItem.item
+        .ui.mini.fluid.input Hero Level
+            input(type="number" placeholder="Enter Hero Level for Stats" ng-model="lvl")
+    .item
+        div(ng-class="{grey: !grid}") Sort
+        span.ui.mini.fluid.input
+            input(type="text" ng-show="grid" placeholder="Enter stat to sort by" ng-model="sortKey")
+        span.ui.blue.small.button(ng-click="reverse()" ng-class="{disabled: !grid}") {{sortButton}}
+        .ui.pointing.left.label(ng-show="grid") Currently {{order}}
+
+.ui.small(ng-show="!grid") Click on table headers to sort.
+
+.ui(ng-show="grid")
+        .ui.champs(ng-repeat = "actor in champs  | filter:search | orderBy:getSortValue:reverseSort track by actor.name")
+            .ui.center.aligned.five.column.celled.grid
+                .row
+                    .column
+                        h4.ui.black.tiny.top.attached.header {{actor.playerData.playerDisplayName}} | {{actor.attackType}} | {{actor.role1}} {{actor.role2}}
+                .row
+                    .column
+                        .ui.tiny.blue.header Stats (Level {{lvl}})
+                        .ui.mini.divided.list
+                            .item(ng-repeat="(stat, conv) in convertTable track by stat" ng-if="!statsKeysExcludes[stat] && convertTable[stat]" title="{{stat}}")
+                                    span {{conv}} :
+                                    span.ui.tiny.header  {{perLevelV(stat, actor.actorStats)}} {{perLevel(stat, actor.actorStats)}}
+                            .item
+                                .content
+                                    | collisionRadius :
+                                    span.ui.tiny.header {{actor.collisionRadius}}
+                    .column
+                        .ui.mini.list
+                            .ui.tiny.red.label (Q) {{actor.spell1.spellName}}
+                            div
+                                .ui {{actor.spell1.spellShortDescription}}
+                                .item(ng-repeat="(stat, value) in actor.spell1 track by stat" ng-show="spellKeys[stat]")
+                                    | {{stat}} :
+                                    span.ui.tiny.header  {{value}}
+                    .column
+                        .ui.mini.list
+                            .ui.tiny.green.label (W) {{actor.spell2.spellName}}
+                            div
+                                .ui {{actor.spell2.spellShortDescription}}
+                                .item(ng-repeat="(stat, value) in actor.spell2 track by stat" ng-show="spellKeys[stat]")
+                                    | {{stat}} :
+                                    span.ui.tiny.header  {{value}}
+                    .column
+                        .ui.mini.list
+                            .ui.tiny.white.label (E) {{actor.spell3.spellName}}
+                            div
+                                .ui {{actor.spell3.spellShortDescription}}
+                                .item(ng-repeat="(stat, value) in actor.spell3 track by stat" ng-show="spellKeys[stat]")
+                                    | {{stat}} :
+                                    span.ui.tiny.header  {{value}}
+                    .column
+                        .ui.mini.list
+                            .ui.tiny.blue.label (Passive) {{actor.spell4.spellName}}
+                            div
+                                .ui {{actor.spell4.spellShortDescription}}
+                                .item(ng-repeat="(stat, value) in actor.spell4 track by stat" ng-show="spellKeys[stat]")
+                                    | {{stat}} :
+                                    span.ui.tiny.header  {{value}}
 
 
 table.ui.sortable.small.compact.table.segment(ng-if="!grid")
     thead
         tr
             th.ui.mini(ng-click="setTableSort()" ng-class="setTableClass()") Name
-            th.ui.mini(ng-repeat="stat in statsKeys()" ng-if="convertTable[stat]" ng-click="setTableSort(stat)" ng-class="setTableClass(stat)") {{convertTable[stat]}}
+            th.ui.mini(ng-repeat="(stat, conv) in convertTable" ng-click="setTableSort(stat)" ng-class="setTableClass(stat)") {{conv}}
+            th.ui.mini(ng-click="setTableSort('collisionRadiu')" ng-class="setTableClass('collisionRadius')") Collision Radius
     tbody
         tr(ng-repeat="actor in champs  | orderBy:getSortValue:reverseSort |filter:search track by actor.name")
-            td {{actor.playerData.playerDisplayName}}
-            td(ng-repeat="stat in statsKeys()" ng-if="convertTable[stat]") {{actor.actorStats[stat]}} {{perLevel(stat, actor.actorStats)}}
+            td {{actor.playerData.playerDisplayName}} lvl.{{lvl}}
+            td(ng-repeat="(stat, conv) in convertTable") {{perLevelV(stat, actor.actorStats)}} {{perLevel(stat, actor.actorStats)}}
+            td  {{actor.collisionRadius}}
