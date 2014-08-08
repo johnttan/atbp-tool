@@ -3,6 +3,7 @@
 
 angular.module 'vagrantApp'
 .controller 'MainCtrl', ($scope, $http, socket, Champions) ->
+  $scope.sortButton = 'Reverse Order'
   $scope.champs = Champions.championsData
   $scope.grid = true
   $scope.searchQuery = {
@@ -15,6 +16,7 @@ angular.module 'vagrantApp'
   $scope.setTableSort = (stat)->
     if $scope.sortKey is stat
       $scope.reverseSort = !$scope.reverseSort
+      $scope.order = if $scope.reverseSort then 'Descending' else 'Ascending'
     $scope.sortKey = stat
   $scope.setTableClass = (stat)->
     if $scope.sortKey is stat
@@ -58,11 +60,14 @@ angular.module 'vagrantApp'
     weaponType: true
   }
   $scope.statsKeys = ->
+    if $scope.statsKeysCache
+      return $scope.statsKeysCache
     stats = []
     if $scope.champs[0]
       for stat in Object.keys($scope.champs[0].actorStats)
         if stat not in $scope.statsKeysExcludes
           stats.push(stat)
+    $scope.statsKeysCache = stats
     return stats
   $scope.refresh = ->
     $scope.$digest()
@@ -118,3 +123,13 @@ angular.module 'vagrantApp'
     perLevelStat = stat + 'PerLevel'
     if actorStats[perLevelStat]
       return ' (+' + actorStats[perLevelStat] + ')'
+  $scope.switchView = ->
+    console.log 'switchingView'
+    $scope.grid = !$scope.grid
+    $scope.sortKey = undefined
+    $scope.order = 'Ascending'
+    $scope.reverseSort = false
+    if $scope.grid
+      $scope.sortButton = 'Reverse Order'
+    else
+      $scope.sortButton = 'Use table headers to sort'
