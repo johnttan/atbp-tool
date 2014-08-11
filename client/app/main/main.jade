@@ -1,6 +1,7 @@
 .ui.connected.items
     div#switchViewButtonItem.item
         .fluid.ui.green.button(ng-click="switchView()") Switch View
+        .fluid.ui.red.button(ng-click="showHeroSelect = !showHeroSelect") Show Heroes
     .item
         div Search
         span.ui.mini.fluid.input
@@ -18,6 +19,9 @@
         span.ui.blue.small.button(ng-click="reverse()" ng-class="{disabled: !grid}") {{sortButton}}
         .ui.pointing.left.label(ng-show="grid") Currently {{order}}
 
+.ui.mini.horizontal.list(ng-show="showHeroSelect")
+    .item(ng-repeat="actor in champs track by actor.name" ng-click="searchQuery.name = actor.playerData.playerDisplayName")
+        .ui.red.small.button {{actor.playerData.playerDisplayName}}
 .ui.small(ng-show="!grid") Click on table headers to sort.
 
 .ui(ng-show="grid")

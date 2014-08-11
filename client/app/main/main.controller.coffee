@@ -133,7 +133,11 @@ angular.module 'vagrantApp'
         lvl = $scope.lvl - 1
       else
         lvl = 0
-      return (parseInt(value) + lvl*actorStats[perLevelStat]).toString()
+
+      if stat is 'attackSpeed'
+        return (parseInt(value) - lvl*actorStats[perLevelStat]).toString()
+      else
+        return (parseInt(value) + lvl*actorStats[perLevelStat]).toString()
     else
       return value
 
