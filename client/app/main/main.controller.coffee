@@ -151,3 +151,8 @@ angular.module 'vagrantApp'
       $scope.sortButton = 'Reverse Order'
     else
       $scope.sortButton = 'Use table headers to sort'
+  $scope.selectHero = (heroName)->
+    if $scope.searchQuery.name isnt heroName
+      $scope.searchQuery.name = heroName
+    else
+      $scope.searchQuery.name = ''
