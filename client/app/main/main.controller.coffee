@@ -156,3 +156,8 @@ angular.module 'vagrantApp'
       $scope.searchQuery.name = heroName
     else
       $scope.searchQuery.name = ''
+  $scope.heroButton = (heroName)->
+    if $scope.searchQuery.name isnt heroName
+      return 'red'
+    else
+      return 'blue'

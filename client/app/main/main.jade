@@ -21,7 +21,7 @@
 
 .ui.mini.horizontal.list(ng-show="showHeroSelect")
     .item(ng-repeat="actor in champs track by actor.name" ng-click="selectHero(actor.playerData.playerDisplayName)")
-        .ui.red.small.button {{actor.playerData.playerDisplayName}}
+        .ui.small.button(ng-class="heroButton(actor.playerData.playerDisplayName)") {{actor.playerData.playerDisplayName}}
 .ui.small(ng-show="!grid") Click on table headers to sort.
 
 .ui(ng-show="grid")
