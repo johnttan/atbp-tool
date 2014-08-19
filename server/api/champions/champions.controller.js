@@ -3,12 +3,12 @@
 var _ = require('lodash');
 var Champions = require('./champions.model');
 var request = require('request');
-var ChampionsJSON = require('./atbp.json')
+var ATBP_JSON = require('../atbp.json')
 //request('http://www.cartoonnetwork.com/games/adventuretime/adventure-time-battle-party/assets/data/atbp.json',
 //    function(error, response, body){
 //        if (!error && response.statusCode == 200){
 //            console.log('successful get for champions')
-//            ChampionsJSON = JSON.parse(body)
+//            ATBP_JSON = JSON.parse(body)
 //        }else{
 //            console.log('error getting champions ' + error)
 //        }
@@ -16,9 +16,8 @@ var ChampionsJSON = require('./atbp.json')
 //)
 // Get list of championss
 exports.index = function(req, res) {
-    if(ChampionsJSON){
-        console.log(typeof ChampionsJSON)
-        res.json(ChampionsJSON.Actors)
+    if(ATBP_JSON){
+        return res.json(ATBP_JSON.Actors)
     }
 };
 

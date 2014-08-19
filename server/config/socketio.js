@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/backpack/backpack.socket').register(socket);
   require('../api/champions/champions.socket').register(socket);
 //  require('../api/thing/thing.socket').register(socket);
 }

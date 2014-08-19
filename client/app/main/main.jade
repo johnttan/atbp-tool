@@ -80,7 +80,7 @@ table.ui.sortable.small.compact.table.segment(ng-if="!grid")
         tr
             th.ui.mini(ng-click="setTableSort()" ng-class="setTableClass()") Name
             th.ui.mini(ng-repeat="(stat, conv) in convertTable" ng-click="setTableSort(stat)" ng-class="setTableClass(stat)") {{conv}}
-            th.ui.mini(ng-click="setTableSort('collisionRadiu')" ng-class="setTableClass('collisionRadius')") Collision Radius
+            th.ui.mini(ng-click="setTableSort('collisionRadius')" ng-class="setTableClass('collisionRadius')") Collision Radius
     tbody
         tr(ng-repeat="actor in champs  | orderBy:getSortValue:reverseSort |filter:search track by actor.name")
             td {{actor.playerData.playerDisplayName}} lvl.{{lvl}}

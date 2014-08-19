@@ -2,7 +2,7 @@
 
 
 angular.module 'vagrantApp'
-.controller 'MainCtrl', ($scope, $http, socket, Champions) ->
+.controller 'MainCtrl', ($scope, Champions, Backpacks) ->
 
   $scope.lvl = 1
   $scope.sortButton = 'Reverse Order'
@@ -20,6 +20,7 @@ angular.module 'vagrantApp'
       $scope.reverseSort = !$scope.reverseSort
       $scope.order = if $scope.reverseSort then 'Descending' else 'Ascending'
     $scope.sortKey = stat
+  
   $scope.setTableClass = (stat)->
     if $scope.sortKey is stat
       if $scope.reverseSort
@@ -28,6 +29,7 @@ angular.module 'vagrantApp'
         return 'ascending'
     else
       return
+  
   $scope.reverse = ->
     $scope.reverseSort = !$scope.reverseSort
     $scope.order = if $scope.reverseSort then 'Descending' else 'Ascending'
@@ -73,6 +75,7 @@ angular.module 'vagrantApp'
     return stats
   $scope.refresh = ->
     $scope.$digest()
+  # should refactor these tables into service
   $scope.convertTable = {
     attackDamage: 'AD'
     attackSpeed: 'AS'
