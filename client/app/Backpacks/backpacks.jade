@@ -1,2 +1,4 @@
-.col-md-12
-    | This is the backpacks view.
+.ui.list
+	.item(ng-repeat="(beltKey, belt) in backpacks.Belts")
+		.header {{belt.name}} 
+		|{{belt}}

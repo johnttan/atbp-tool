@@ -1,5 +1,5 @@
 'use strict'
 
 angular.module 'vagrantApp'
-.controller 'BackpacksCtrl', ($scope) ->
-  $scope.message = 'Hello'
+.controller 'BackpacksCtrl', ($scope, Backpacks) ->
+  $scope.backpacks = Backpacks.backpacksData

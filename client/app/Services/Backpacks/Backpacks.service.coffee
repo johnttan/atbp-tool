@@ -7,7 +7,12 @@ angular.module 'vagrantApp'
         @backpacksData = {}
         do(Backpacks = @)->
           Backpacks.$http.get('/api/backpacks').success((data)->
-              Backpacks.backpacksData.Belts = data.Belts
+              beltsJSON = {}
+              data.Belts.forEach((belt)->
+                  beltKey = Object.keys(belt)[0]
+                  beltsJSON[beltKey] = belt[beltKey][0].belt
+                )
+              Backpacks.backpacksData.Belts = beltsJSON
               Backpacks.backpacksData.Junk = data.Junk
           ).error((data, status)->
             console.log 'error', data, status
