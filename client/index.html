@@ -37,7 +37,6 @@
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
     <div ui-view=""></div>
 
 
@@ -64,8 +63,10 @@
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
           <!-- injector:js -->
-          <script src="app/Backpacks/Backpacks.js"></script>
-          <script src="app/Champions/Champions.js"></script>
+          <script src="app/Services/Backpacks/Backpacks.js"></script>
+          <script src="app/Services/Champions/Champions.js"></script>
+          <script src="app/backpacks/backpacks.js"></script>
+          <script src="app/champions/champions.js"></script>
           <script src="app/main/main.js"></script>
           <script src="components/navbar/navbar.js"></script>
           <script src="components/socket/socket.js"></script>
