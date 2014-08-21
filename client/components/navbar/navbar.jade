@@ -1,10 +1,11 @@
 .ui.vertical.menu(ng-controller="NavbarCtrl")
 	div(ng-show="!collapsed")
-		a.blue.item(ui-sref=".champions"  ng-class="{active: isActive('/champions')}") Heroes
-		a.green.item(ui-sref=".backpacks" ng-class="{active: isActive('/backpacks')}") Backpacks
-		a.red.item(ui-sref=".build" ng-click="collapse('build')" ng-class="{active: isActive('/build')}") Build {{selectedHero()}} {{selectedBackpack()}}
+		a.blue.header.item(ui-sref=".champions"  ng-class="{active: isActive('/champions')}") Heroes
+		a.green.header.item(ui-sref=".backpacks" ng-class="{active: isActive('/backpacks')}") Backpacks
+		a.red.header.item(ui-sref=".build" ng-click="collapse('build')" ng-class="{active: isActive('/build')}") Build {{selectedHero()}} {{selectedBackpack()}}
 		a.item.black.inverted.header(ng-click="collapse('toggle')") Collapse Menu
-		.ui.horizontal.icon.divider How?
+		.ui.horizontal.icon.divider
+			i.question.icon
 		a.item Use menu above to navigate
 		a.item To simulate build:
 		a.item(ui-sref=".champions") 1. Pick Hero from Heroes tab
