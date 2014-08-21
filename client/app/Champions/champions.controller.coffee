@@ -49,14 +49,13 @@ angular.module 'vagrantApp'
     else
       return true
   $scope.spellKeys = {
-    spellType: true
-    spellRange: true
-    castDelay: true
-    spellCoolDown: true
-    damage: true
-    damageRatio: true
-    spellArea: true
-    spellDuration: true
+    spellRange: 'Range'
+    castDelay: 'Delay'
+    spellCoolDown: 'CD'
+    damage: 'Damage'
+    damageRatio: 'Scaling'
+    spellArea: 'AOE'
+    spellDuration: 'Duration'
   }
   $scope.statsKeysExcludes = {
     lifeSteal: true
