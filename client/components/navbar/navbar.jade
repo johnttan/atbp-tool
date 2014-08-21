@@ -1,5 +1,4 @@
 .ui.vertical.menu(ng-controller="NavbarCtrl")
-
 	div(ng-show="!collapsed")
 		a.blue.item(ui-sref=".champions"  ng-class="{active: isActive('/champions')}") Heroes
 		a.green.item(ui-sref=".backpacks" ng-class="{active: isActive('/backpacks')}") Backpacks
@@ -11,12 +10,12 @@
 		a.item(ui-sref=".champions") 1. Pick Hero from Heroes tab
 		a.item(ui-sref=".backpacks") 2. Select Backpack from Backpacks tab
 		a.item(ui-sref=".build" ng-click="collapse('build')") 3. Go Build!
-	.ui.fluid.icon.menu(ng-show="collapsed")
-		a.blue.item(ui-sref=".champions" ng-click="collapse()")
+	.ui.inverted.fluid.icon.menu(ng-show="collapsed")
+		a.blue.item(ui-sref=".champions" ng-click="collapse()" ng-class="{active: isActive('/champions')}")
 			i.large.user.icon
-		a.green.item(ui-sref=".backpacks" ng-click="collapse()")
+		a.green.item(ui-sref=".backpacks" ng-click="collapse()" ng-class="{active: isActive('/backpacks')}")
 			i.large.legal.icon
-		a.red.item(ui-sref=".build")
+		a.red.item(ui-sref=".build" ng-class="{active: isActive('/build')}")
 			i.large.tasks.icon
 		a.black.item(ng-click="collapse('toggle')")
 			i.large.expand.icon

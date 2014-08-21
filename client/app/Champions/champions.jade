@@ -1,7 +1,7 @@
 .ui.connected.items
     div#switchViewButtonItem.item
         .fluid.ui.green.button(ng-click="switchView()") Switch View
-        .fluid.ui.red.button(ng-click="showHeroSelect = !showHeroSelect") Show Heroes
+        .fluid.ui.blue.button(ng-click="showHeroSelect = !showHeroSelect") Show Heroes
     .item
         div Search
         span.ui.mini.fluid.input
@@ -15,8 +15,8 @@
     .item
         div(ng-class="{grey: !grid}") Sort
         span.ui.mini.fluid.input
-            input(type="text" ng-show="grid" placeholder="Enter stat to sort by" ng-model="sortKey")
-        span.ui.blue.small.button(ng-click="reverse()" ng-class="{disabled: !grid}") {{sortButton}}
+            input(type="text" ng-show="grid" placeholder="Enter stat to sort by (default by name)" ng-model="sortKey")
+        span.ui.black.small.button(ng-click="reverse()" ng-class="{disabled: !grid}") {{sortButton}}
         .ui.pointing.left.label(ng-show="grid") {{order}}
 
 .ui.mini.horizontal.list(ng-show="showHeroSelect")
@@ -30,7 +30,7 @@
         .ui.center.aligned.five.column.celled.grid
             .row
                 .column#champheadercolumn
-                    h4.ui.inverted.button.tiny.top.attached.header.champheader(ng-click="addBuild(actor)" ng-class="selectHero(actor.name)") {{actor.playerData.playerDisplayName}} | {{actor.attackType}} | {{actor.role1}} {{actor.role2}}
+                    h4.ui.inverted.button.tiny.top.attached.header.champheader(ng-click="addBuild(actor)" ng-class="selectHeroBuild(actor.name)") {{actor.playerData.playerDisplayName}} | {{actor.attackType}} | {{actor.role1}} {{actor.role2}}
             .row
                 .column
                     img.rounded.ui.image(ng-src="{{avatarUrl(actor)}}" ng-click="addBuild(actor)")
