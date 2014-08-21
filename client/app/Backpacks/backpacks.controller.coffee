@@ -11,7 +11,6 @@ angular.module 'vagrantApp'
 		return url
 		
 	$scope.searchName = (belt)->
-		console.log belt.name
 		if $scope.search.Backpack
 			LCbelt = belt.name.toLowerCase()
 			LCsearch = $scope.search.Backpack.toLowerCase()
