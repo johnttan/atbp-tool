@@ -41,7 +41,10 @@ angular.module 'vagrantApp'
       return champ.playerData.playerDisplayName
   $scope.search = (champion)->
     if $scope.searchQuery.name
-      decision = champion.playerData.playerDisplayName.indexOf($scope.searchQuery.name) > -1 or ($scope.searchQuery.name2.length > 1 and champion.playerData.playerDisplayName.indexOf($scope.searchQuery.name2) > -1)
+      LCsearch = $scope.searchQuery.name.toLowerCase()
+      LCsearch2 = $scope.searchQuery.name2.toLowerCase()
+      LCname = champion.playerData.playerDisplayName.toLowerCase()
+      decision = LCname.indexOf(LCsearch) > -1 or (LCsearch2.length > 1 and LCname.indexOf(LCsearch2) > -1)
       return decision
     else
       return true

@@ -1,4 +1,17 @@
+//- .ui.list
+//- 	.item(ng-repeat = "junk in backpacks.Junk")
+//- 		{{junk}}
+.ui.input
+	|{{search.Backpack}}
+	input(placeholder="Search backpacks" ng-model="search.Backpack")
 .ui.list
-	.item(ng-repeat="(beltKey, belt) in backpacks.Belts")
-		.header {{belt.name}} 
-		|{{belt}}
+	.item(ng-repeat="belt in backpacks.BeltsArray | filter:searchName")
+		.header {{belt.name}}
+		div {{belt.description}}
+		.item(ng-repeat="slot in slots")
+			//- How to refactor these long data getters?
+			//- Make a Backpack Controller? Performance issues?
+			img.ui.avatar.image(ng-src="{{junkIcon(belt.junk[slot].junk_id)}}")
+			div {{backpacks.Junk[belt.junk[slot].junk_id].name}} 
+			span(ng-repeat-start="mod in mods" ng-show="backpacks.Junk[belt.junk[slot].junk_id][mod]") {{backpacks.Junk[belt.junk[slot].junk_id][mod]}}
+			span(ng-repeat-end ng-show="backpacks.Junk[belt.junk[slot].junk_id][mod]")  |  
