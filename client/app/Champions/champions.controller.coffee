@@ -170,3 +170,12 @@ angular.module 'vagrantApp'
 
   $scope.addBuild = (hero)->
     Builder.addHero(hero)
+
+  $scope.avatarUrl = (hero)->
+    urlname = hero.name
+    if hero.name is 'flame'
+      urlname = 'flameprincess'
+    else if hero.name is 'princessbubblegum'
+      urlname = 'pb'
+    url = "http://i.cdn.turner.com/toon/games/adventuretime/adventure-time-battle-party/assets/img/champions-icon-" + urlname + ".jpg"
+    return url

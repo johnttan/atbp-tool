@@ -22,8 +22,9 @@
 .ui.mini.horizontal.list(ng-show="showHeroSelect")
     .item(ng-repeat="actor in champs track by actor.name" ng-click="selectHero(actor.playerData.playerDisplayName)")
         .ui.small.button(ng-class="heroButton(actor.playerData.playerDisplayName)") {{actor.playerData.playerDisplayName}}
-.ui.small(ng-show="!grid") Click on table headers to sort.
-.ui.tiny.blue.header Click blue Hero headers to select Hero for Hero Builder
+.ui.small.header(ng-show="!grid") Click on table headers to sort.
+.ui.small.blue.header(ng-show="grid") Click Hero avatar or blue headers to select Hero for Hero Builder
+.ui.small.blue.header(ng-show="!grid") Click Hero name to select Hero for Hero Builder
 .ui(ng-show="grid")
     .ui.champs#champitem(ng-repeat = "actor in champs  | filter:search | orderBy:getSortValue:reverseSort track by actor.name")
         .ui.center.aligned.five.column.celled.grid
@@ -32,6 +33,7 @@
                     h4.ui.inverted.blue.button.tiny.top.attached.header.champheader(ng-click="addBuild(actor)") {{actor.playerData.playerDisplayName}} | {{actor.attackType}} | {{actor.role1}} {{actor.role2}}
             .row
                 .column
+                    img.rounded.ui.image(ng-src="{{avatarUrl(actor)}}" ng-click="addBuild(actor)")
                     .ui.tiny.blue.header Stats (Level {{lvl}})
                     .ui.mini.divided.list
                         .item(ng-repeat="(stat, conv) in convertTable track by stat" ng-if="!statsKeysExcludes[stat] && convertTable[stat]" title="{{stat}}")
