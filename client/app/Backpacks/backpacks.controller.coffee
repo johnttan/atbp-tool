@@ -24,3 +24,10 @@ angular.module 'vagrantApp'
 		for slot in $scope.slots
 			belt.junk[slot] = Junk[belt.junk[slot].junk_id]
 		Builder.addBelt(belt)
+		$scope.selectedBelt = belt.name
+
+	$scope.selectBackpack = (name)->
+		if name is $scope.selectedBelt
+			return 'blue'
+		else
+			return 'green'
