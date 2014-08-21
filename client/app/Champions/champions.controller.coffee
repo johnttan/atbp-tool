@@ -2,7 +2,7 @@
 
 
 angular.module 'vagrantApp'
-.controller 'ChampionsCtrl', ($scope, Champions, Backpacks) ->
+.controller 'ChampionsCtrl', ($scope, Champions, Backpacks, Builder) ->
 
   $scope.lvl = 1
   $scope.sortButton = 'Reverse Order'
@@ -167,3 +167,6 @@ angular.module 'vagrantApp'
       return 'red'
     else
       return 'blue'
+
+  $scope.addBuild = (hero)->
+    Builder.addHero(hero)

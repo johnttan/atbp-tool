@@ -23,13 +23,13 @@
     .item(ng-repeat="actor in champs track by actor.name" ng-click="selectHero(actor.playerData.playerDisplayName)")
         .ui.small.button(ng-class="heroButton(actor.playerData.playerDisplayName)") {{actor.playerData.playerDisplayName}}
 .ui.small(ng-show="!grid") Click on table headers to sort.
-
+.ui.tiny.blue.header Click blue Hero headers to select Hero for Hero Builder
 .ui(ng-show="grid")
-    .ui.champs(ng-repeat = "actor in champs  | filter:search | orderBy:getSortValue:reverseSort track by actor.name")
+    .ui.champs#champitem(ng-repeat = "actor in champs  | filter:search | orderBy:getSortValue:reverseSort track by actor.name")
         .ui.center.aligned.five.column.celled.grid
             .row
-                .column
-                    h4.ui.black.tiny.top.attached.header {{actor.playerData.playerDisplayName}} | {{actor.attackType}} | {{actor.role1}} {{actor.role2}}
+                .column#champheadercolumn
+                    h4.ui.inverted.blue.button.tiny.top.attached.header.champheader(ng-click="addBuild(actor)") {{actor.playerData.playerDisplayName}} | {{actor.attackType}} | {{actor.role1}} {{actor.role2}}
             .row
                 .column
                     .ui.tiny.blue.header Stats (Level {{lvl}})

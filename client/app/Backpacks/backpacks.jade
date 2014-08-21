@@ -1,9 +1,10 @@
 .ui.input
 	|{{search.Backpack}}
 	input(placeholder="Search backpacks" ng-model="search.Backpack")
+.ui.tiny.green.header Click green backpack headers to select backpack for Hero Builder
 .ui.list
 	.item(ng-repeat="belt in backpacks.BeltsArray | filter:searchName")
-		.header {{belt.name}}
+		.ui.inverted.green.button.tiny.header(ng-click="addBuilder(belt, backpacks.Junk)") {{belt.name}}
 		div {{belt.description}}
 		.item(ng-repeat="slot in slots")
 			//- How to refactor these long data getters?

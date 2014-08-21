@@ -1,4 +1,4 @@
 .ui.vertical.menu(ng-controller="NavbarCtrl")
-	a.green.item(ui-sref=".champions" ng-class="{active: isActive('/champions')}") Champions
+	a.blue.item(ui-sref=".champions" ng-class="{active: isActive('/champions')}") Heroes
 	a.green.item(ui-sref=".backpacks" ng-class="{active: isActive('/backpacks')}") Backpacks
-	a.green.item(ui-sref=".build" ng-class="{active: isActive('/build')}") Build Hero 
+	a.red.item(ui-sref=".build" ng-class="{active: isActive('/build')}") Build {{selectedHero()}} {{selectedBackpack()}}

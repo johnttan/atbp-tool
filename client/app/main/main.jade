@@ -1,6 +1,6 @@
 .ui.grid
-	.two.wide.column.navbar(ng-include="'components/navbar/navbar.html'")
-	.fourteen.wide.column.mainview
+	.three.wide.column.navbar(ng-include="'components/navbar/navbar.html'")
+	.thirteen.wide.column.mainview
 		//- This is a hack for routing. UI-router re-renders entire view on state change. Causes 1 second + lag and doesn't maintain state.
 		//- Using ng-show prevents re-render of DOM, improving UI responsiveness by trading memory.
 		div(ng-controller="ChampionsCtrl" ng-include="'app/champions/champions.html'" ng-show = "isActive('/champions')")

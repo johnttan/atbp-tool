@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'vagrantApp'
-.controller 'BackpacksCtrl', ($scope, Backpacks) ->
+.controller 'BackpacksCtrl', ($scope, Backpacks, Builder) ->
 	$scope.search = {}
 	$scope.backpacks = Backpacks.backpacksData
 	$scope.slots = ['slot1', 'slot2', 'slot3', 'slot4']
@@ -18,3 +18,9 @@ angular.module 'vagrantApp'
 		else
 			decision = true
 		return decision 
+
+	$scope.addBuilder = (belt, Junk)->
+		belt = JSON.parse(JSON.stringify(belt))
+		for slot in $scope.slots
+			belt.junk[slot] = Junk[belt.junk[slot].junk_id]
+		Builder.addBelt(belt)
