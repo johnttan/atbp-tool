@@ -169,8 +169,13 @@ angular.module 'vagrantApp'
       return 'blue'
 
   $scope.addBuild = (hero)->
+    $scope.selectedHero = hero.name
     Builder.addHero(hero)
-
+  $scope.selectHero = (name)->
+    if name is $scope.selectedHero
+      return 'red'
+    else
+      return 'blue'
   $scope.avatarUrl = (hero)->
     urlname = hero.name
     if hero.name is 'flame'

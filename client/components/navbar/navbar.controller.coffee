@@ -17,9 +17,24 @@ angular.module 'vagrantApp'
 
   $scope.collapsed = false
 
-  $scope.collapse = ->
+  $scope.collapse = (build)->
     console.log 'collapsing'
-    $scope.collapsed = !$scope.collapsed
+    # This logic collapses the menu when navigating to build tab.
+    # If menu was collapsed due to build, menu is expanded upon navigation to Heroes or Backpacks tab.
+    if build is 'build'
+      console.log 'build'
+      $scope.collapsed = true
+      $scope.buildCollapsed = true
+    else
+      console.log 'nobuild'
+      if $scope.buildCollapsed
+        console.log 'expanding'
+        $scope.collapsed = false
+        $scope.buildCollapsed = false
+      else
+        if build is 'toggle'
+          console.log 'toggling'
+          $scope.collapsed = !$scope.collapsed
     if $scope.collapsed
       $rootScope.$emit('collapse')
     else

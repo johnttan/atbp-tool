@@ -30,7 +30,7 @@
         .ui.center.aligned.five.column.celled.grid
             .row
                 .column#champheadercolumn
-                    h4.ui.inverted.blue.button.tiny.top.attached.header.champheader(ng-click="addBuild(actor)") {{actor.playerData.playerDisplayName}} | {{actor.attackType}} | {{actor.role1}} {{actor.role2}}
+                    h4.ui.inverted.button.tiny.top.attached.header.champheader(ng-click="addBuild(actor)" ng-class="selectHero(actor.name)") {{actor.playerData.playerDisplayName}} | {{actor.attackType}} | {{actor.role1}} {{actor.role2}}
             .row
                 .column
                     img.rounded.ui.image(ng-src="{{avatarUrl(actor)}}" ng-click="addBuild(actor)")

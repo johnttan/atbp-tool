@@ -28,6 +28,6 @@ angular.module 'vagrantApp'
 
 	$scope.selectBackpack = (name)->
 		if name is $scope.selectedBelt
-			return 'blue'
+			return 'red'
 		else
 			return 'green'
