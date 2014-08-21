@@ -2,7 +2,8 @@
 
 
 angular.module 'vagrantApp'
-.controller 'MainCtrl', ($scope, $location, Champions, Backpacks) ->
-
-  $scope.isActive = (route)->
-  	route is $location.path()
+.controller 'MainCtrl', ($scope, $state, $location, Champions, Backpacks) ->
+	if $location.path() is '/'
+		$state.go('main.champions')
+	$scope.isActive = (route)->
+		route is $location.path()

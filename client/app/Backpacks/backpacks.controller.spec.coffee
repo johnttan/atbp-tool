@@ -13,5 +13,5 @@ describe 'Controller: BackpacksCtrl', ->
     BackpacksCtrl = $controller 'BackpacksCtrl',
       $scope: scope
 
-  it 'should ...', ->
-    expect(1).toEqual 1
+  it 'should return icon url', ->
+    expect(scope.junkIcon('finn')).toEqual "http://i.cdn.turner.com/toon/games/adventuretime/adventure-time-battle-party/assets/img/icons/backpacks/finn.png"

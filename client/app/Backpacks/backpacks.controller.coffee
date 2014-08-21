@@ -9,6 +9,7 @@ angular.module 'vagrantApp'
 	$scope.junkIcon = (junk)->
 		url = "http://i.cdn.turner.com/toon/games/adventuretime/adventure-time-battle-party/assets/img/icons/backpacks/" + junk + ".png"
 		return url
+		
 	$scope.searchName = (belt)->
 		console.log belt.name
 		if $scope.search.Backpack
