@@ -4,6 +4,7 @@ div(ng-controller="BackpacksCtrl" ng-show = "isActive('/backpacks')")
 	.ui.tiny.green.header Click green backpack headers to select backpack for Hero Builder
 	.ui.list
 		.item(ng-repeat="belt in backpacks.BeltsArray | filter:searchName")
+			div {{belt}}
 			.ui.inverted.button.tiny.header(ng-click="addBuilder(belt, backpacks.Junk)" ng-class="selectBackpack(belt.name)") {{belt.name}}
 			div {{belt.description}}
 			.item(ng-repeat="slot in slots")

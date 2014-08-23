@@ -4,6 +4,8 @@ angular.module 'vagrantApp'
 .controller 'BuildCtrl', ($scope, Builder) ->
   $scope.build = Builder.build
   $scope.lvl = 1
+  $scope.slots = ['slot1', 'slot2', 'slot3', 'slot4']
+  $scope.mods = ['modDescription1', 'modDescription2', 'modDescription3']
   $scope.perLevel1 = (stat)->
     actorStats = $scope.build.hero.actorStats
     perLevelStat = stat + 'PerLevel'
@@ -67,4 +69,3 @@ angular.module 'vagrantApp'
     spellVamp: true
     weaponType: true
   }
-

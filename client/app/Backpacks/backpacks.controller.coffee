@@ -21,8 +21,14 @@ angular.module 'vagrantApp'
 
 	$scope.addBuilder = (belt, Junk)->
 		belt = JSON.parse(JSON.stringify(belt))
+		junkIDs = {}
 		for slot in $scope.slots
-			belt.junk[slot] = Junk[belt.junk[slot].junk_id]
+			junk_id = belt.junk[slot].junk_id
+			junkIDs[slot] = junk_id
+		for slot in $scope.slots
+			junk_id = belt.junk[slot].junk_id
+			belt.junk[slot] = JSON.parse(JSON.stringify(Junk[belt.junk[slot].junk_id]))
+			belt.junk[slot].URL = $scope.junkIcon(junkIDs[slot])
 		Builder.addBelt(belt)
 		$scope.selectedBelt = belt.name
 

@@ -5,6 +5,7 @@ angular.module 'vagrantApp'
     class Builder
       constructor: (@$http)->
         @build = {}
+        @junkURLs = {}
       addHero: (hero)->
       	console.log hero
       	@build.hero = hero

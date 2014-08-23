@@ -2,19 +2,34 @@ div(ng-controller="BuildCtrl" ng-show = "isActive('/build')")
 	.ui.vertically.divided.grid
 		.one.column.row
 			.column
-				h1.ui.header {{build.hero.playerData.playerDisplayName}} | {{build.hero.attackType}} | {{build.hero.role1}} {{build.hero.role2}}
+				h2.ui.header {{build.hero.playerData.playerDisplayName}} | {{build.hero.attackType}} | {{build.hero.role1}} {{build.hero.role2}}
 		.two.column.row
-			.three.wide.column
+			.four.wide.center.aligned.column
 				img.rounded.ui.image(ng-src="{{avatarUrl()}}")
-				span Level
-				span.ui.small.input
-					input(type="number" ng-model="lvl")
-			.thirteen.wide.column 
+				.ui.grid
+					.two.column.row
+						.eight.wide.right.aligned.column#statHeaders
+							div Level
+							div(ng-repeat="(stat, conv) in convertTable" ng-if="!statsKeysExcludes[stat]") {{conv}}
+						.eight.wide.left.aligned.column
+							div {{lvl}}
+							div(ng-repeat="(stat, conv) in convertTable") {{perLevelV1(stat)}} {{perLevel1(stat)}}
+			.twelve.wide.column
+				.ui.tiny.header#buildBeltName {{build.belt.name}}
+				div {{build.belt.description}}
+				.item(ng-repeat="slot in slots")
+					//- How to refactor these long data getters?
+					//- Make a Backpack Controller? Performance issues?
+					img.ui.avatar.image(ng-src="{{build.belt.junk[slot].URL}}")
+					span {{build.belt.junk[slot].name}} 
+					//- div {{build.belt.junk[slot]}}
+					div 
+					span(ng-repeat-start="mod in mods" ng-show="build.belt.junk[slot][mod]") {{build.belt.junk[slot][mod]}}
+					span(ng-repeat-end ng-show="build.belt.junk[slot][mod]")  |  
+					.ui.divider
+
 		.two.column.row
-			.two.wide.right.aligned.column#statHeaders
-				div(ng-repeat="(stat, conv) in convertTable" ng-if="!statsKeysExcludes[stat]") {{conv}}
-			.two.wide.left.aligned.column
-				div(ng-repeat="(stat, conv) in convertTable") {{perLevelV1(stat)}} {{perLevel1(stat)}}
+
 			.eleven.wide.column
 				.ui.red.label Q 
 				span(ng-repeat="(stat, value) in build.hero.spell1" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
