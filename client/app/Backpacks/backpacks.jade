@@ -1,14 +1,15 @@
-.ui.input
-	input(placeholder="Search backpacks" ng-model="search.Backpack")
-.ui.tiny.green.header Click green backpack headers to select backpack for Hero Builder
-.ui.list
-	.item(ng-repeat="belt in backpacks.BeltsArray | filter:searchName")
-		.ui.inverted.button.tiny.header(ng-click="addBuilder(belt, backpacks.Junk)" ng-class="selectBackpack(belt.name)") {{belt.name}}
-		div {{belt.description}}
-		.item(ng-repeat="slot in slots")
-			//- How to refactor these long data getters?
-			//- Make a Backpack Controller? Performance issues?
-			img.ui.avatar.image(ng-src="{{junkIcon(belt.junk[slot].junk_id)}}")
-			div {{backpacks.Junk[belt.junk[slot].junk_id].name}} 
-			span(ng-repeat-start="mod in mods" ng-show="backpacks.Junk[belt.junk[slot].junk_id][mod]") {{backpacks.Junk[belt.junk[slot].junk_id][mod]}}
-			span(ng-repeat-end ng-show="backpacks.Junk[belt.junk[slot].junk_id][mod]")  |  
+div(ng-controller="BackpacksCtrl" ng-show = "isActive('/backpacks')")
+	.ui.input
+		input(placeholder="Search backpacks" ng-model="search.Backpack")
+	.ui.tiny.green.header Click green backpack headers to select backpack for Hero Builder
+	.ui.list
+		.item(ng-repeat="belt in backpacks.BeltsArray | filter:searchName")
+			.ui.inverted.button.tiny.header(ng-click="addBuilder(belt, backpacks.Junk)" ng-class="selectBackpack(belt.name)") {{belt.name}}
+			div {{belt.description}}
+			.item(ng-repeat="slot in slots")
+				//- How to refactor these long data getters?
+				//- Make a Backpack Controller? Performance issues?
+				img.ui.avatar.image(ng-src="{{junkIcon(belt.junk[slot].junk_id)}}")
+				div {{backpacks.Junk[belt.junk[slot].junk_id].name}} 
+				span(ng-repeat-start="mod in mods" ng-show="backpacks.Junk[belt.junk[slot].junk_id][mod]") {{backpacks.Junk[belt.junk[slot].junk_id][mod]}}
+				span(ng-repeat-end ng-show="backpacks.Junk[belt.junk[slot].junk_id][mod]")  |  

@@ -4,4 +4,3 @@ angular.module 'vagrantApp'
 .config ($stateProvider) ->
   $stateProvider.state 'main.backpacks',
     url: 'backpacks'
-    controller: 'BackpacksCtrl'

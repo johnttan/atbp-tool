@@ -1,31 +1,34 @@
-.ui.vertically.divided.grid
-	.one.column.row
-		.column
-			h1.ui.header {{build.hero.playerData.playerDisplayName}} | {{build.hero.attackType}} | {{build.hero.role1}} {{build.hero.role2}}
-	.two.column.row
-		.three.wide.column
-			img.rounded.ui.image(ng-src="{{avatarUrl()}}")
-			.ui.header Level {{lvl}}
-		.thirteen.wide.column 
-	.two.column.row
-		.two.wide.right.aligned.column#statHeaders
-			div(ng-repeat="(stat, conv) in convertTable" ng-if="!statsKeysExcludes[stat]") {{conv}}
-		.two.wide.left.aligned.column
-			div(ng-repeat="(stat, conv) in convertTable") {{perLevelV1(stat)}} {{perLevel1(stat)}}
-		.eleven.wide.column
-			.ui.red.label Q 
-			span(ng-repeat="(stat, value) in build.hero.spell1" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
-			div {{build.hero.spell1.spellShortDescription}}
-			.ui.divider
-			.ui.green.label W 
-			span(ng-repeat="(stat, value) in build.hero.spell2" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
-			div {{build.hero.spell2.spellShortDescription}}
-			.ui.divider
-			.ui.white.label E 
-			span(ng-repeat="(stat, value) in build.hero.spell3" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
-			div {{build.hero.spell3.spellShortDescription}}
-			.ui.divider
-			.ui.blue.label Passive
-			span(ng-repeat="(stat, value) in build.hero.spell4" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
-			div {{build.hero.spell4.spellShortDescription}}
-div {{build}}
+div(ng-controller="BuildCtrl" ng-show = "isActive('/build')")
+	.ui.vertically.divided.grid
+		.one.column.row
+			.column
+				h1.ui.header {{build.hero.playerData.playerDisplayName}} | {{build.hero.attackType}} | {{build.hero.role1}} {{build.hero.role2}}
+		.two.column.row
+			.three.wide.column
+				img.rounded.ui.image(ng-src="{{avatarUrl()}}")
+				span Level
+				span.ui.small.input
+					input(type="number" ng-model="lvl")
+			.thirteen.wide.column 
+		.two.column.row
+			.two.wide.right.aligned.column#statHeaders
+				div(ng-repeat="(stat, conv) in convertTable" ng-if="!statsKeysExcludes[stat]") {{conv}}
+			.two.wide.left.aligned.column
+				div(ng-repeat="(stat, conv) in convertTable") {{perLevelV1(stat)}} {{perLevel1(stat)}}
+			.eleven.wide.column
+				.ui.red.label Q 
+				span(ng-repeat="(stat, value) in build.hero.spell1" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
+				div {{build.hero.spell1.spellShortDescription}}
+				.ui.divider
+				.ui.green.label W 
+				span(ng-repeat="(stat, value) in build.hero.spell2" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
+				div {{build.hero.spell2.spellShortDescription}}
+				.ui.divider
+				.ui.white.label E 
+				span(ng-repeat="(stat, value) in build.hero.spell3" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
+				div {{build.hero.spell3.spellShortDescription}}
+				.ui.divider
+				.ui.blue.label Passive
+				span(ng-repeat="(stat, value) in build.hero.spell4" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
+				div {{build.hero.spell4.spellShortDescription}}
+	div {{build}}
