@@ -6,7 +6,6 @@ angular.module 'vagrantApp'
   $scope.junkMods = {}
   $scope.heroLvlStats = {}
   $scope.skillLvl = (stat, value, skill)->
-    console.log value
     value = parseFloat(value)
     ratio = parseFloat(skill.damageRatio)
     if stat is 'damage' and ratio < 1
@@ -14,7 +13,6 @@ angular.module 'vagrantApp'
       value = parseInt(value)
     if stat is 'spellCoolDown'
       value -= value * $scope.heroLvlStats.coolDownReduction/100
-    console.log value, stat, $scope.heroLvlStats
     return value
   $scope.selectJunk = (num, slot)->
     $scope.junkMods = {}
@@ -69,7 +67,6 @@ angular.module 'vagrantApp'
     else if urlname is 'princessbubblegum'
       urlname = 'pb'
     url = "http://i.cdn.turner.com/toon/games/adventuretime/adventure-time-battle-party/assets/img/champions-icon-" + urlname + ".jpg"
-    console.log url
     return url
   $scope.spellKeys = {
     spellRange: 'Range'

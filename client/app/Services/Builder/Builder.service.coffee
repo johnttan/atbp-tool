@@ -7,9 +7,7 @@ angular.module 'vagrantApp'
         @build = {}
         @junkURLs = {}
       addHero: (hero)->
-      	console.log hero
       	@build.hero = hero
       addBelt: (belt)->
-      	console.log belt
       	@build.belt = belt
 ]
