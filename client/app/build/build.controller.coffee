@@ -2,7 +2,7 @@
 
 angular.module 'vagrantApp'
 .controller 'BuildCtrl', ($scope, Builder) ->
-  $scope.slots = ['slot1', 'slot2', 'slot3', 'slot4']
+  $scope.slots = ['slot1', 'slot2', 'slot3', 'slot4', 'slot5']
   $scope.junkMods = {}
   $scope.heroLvlStats = {}
   $scope.junkLvls = {}

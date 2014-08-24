@@ -4,7 +4,7 @@ angular.module 'vagrantApp'
 .controller 'BackpacksCtrl', ($scope, Backpacks, Builder) ->
 	$scope.search = {}
 	$scope.backpacks = Backpacks.backpacksData
-	$scope.slots = ['slot1', 'slot2', 'slot3', 'slot4']
+	$scope.slots = ['slot1', 'slot2', 'slot3', 'slot4', 'slot5']
 	$scope.mods = ['modDescription1', 'modDescription2', 'modDescription3']
 	$scope.junkIcon = (junk)->
 		url = "http://i.cdn.turner.com/toon/games/adventuretime/adventure-time-battle-party/assets/img/icons/backpacks/" + junk + ".png"
