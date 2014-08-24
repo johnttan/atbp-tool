@@ -28,18 +28,22 @@ div(ng-controller="BuildCtrl" ng-show = "isActive('/build')")
 				.item(ng-repeat="slot in slots")
 					//- How to refactor these long data getters?
 					//- Make a Backpack Controller? Performance issues?
-					.ui.grid
-						.two.column.row
+					.ui.vertical.grid
+						.two.column.row#levelBoxesRow
 							.one.wide.column#levelBoxesColumn
-								div.lvlBoxes(ng-repeat="num in maxJunkLvl" ng-click="selectJunk(num, slot)" ng-class="{lvlHighlight: num <= junkLvls[slot]}")
-							.fifteen.wide.column
-								img.ui.avatar.image(ng-src="{{build.belt.junk[slot].URL}}")
-								span {{build.belt.junk[slot].name}} 
-								//- div {{build.belt.junk[slot]}}
-								div 
-								span(ng-repeat-start="mod in mods" ng-show="build.belt.junk[slot][mod]") {{build.belt.junk[slot][mod]}}
-								span(ng-repeat-end ng-show="build.belt.junk[slot][mod]")  |  
-					.ui.divider
+								div#lvlButtons
+									i.add.sign.icon.lvlButtons(ng-click="selectJunk(junkLvls[slot]+1, slot)")
+									div.lvlBoxes(ng-repeat="num in maxJunkLvl" ng-click="selectJunk(num, slot)" ng-class="{lvlHighlight: num <= junkLvls[slot], lvlOne: num == 1}")
+									i.minus.sign.icon.lvlButtons(ng-click="selectJunk(junkLvls[slot]-1, slot)")
+							.fifteen.wide.column#junkDataColumn
+								div#junkData
+									img.ui.avatar.image(ng-src="{{build.belt.junk[slot].URL}}")
+									span {{build.belt.junk[slot].name}} 
+									//- div {{build.belt.junk[slot]}}
+									div 
+									span(ng-repeat-start="mod in mods" ng-show="build.belt.junk[slot][mod]") {{build.belt.junk[slot][mod]}}
+									span(ng-repeat-end ng-show="build.belt.junk[slot][mod]")  |  
+					.ui.divider.slotdividers
 
 		.two.column.row
 			.eleven.wide.column

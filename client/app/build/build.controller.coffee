@@ -5,6 +5,7 @@ angular.module 'vagrantApp'
   $scope.slots = ['slot1', 'slot2', 'slot3', 'slot4']
   $scope.junkMods = {}
   $scope.heroLvlStats = {}
+  $scope.junkLvls = {}
   $scope.skillLvl = (stat, value, skill)->
     value = parseFloat(value)
     ratio = parseFloat(skill.damageRatio)
@@ -15,18 +16,18 @@ angular.module 'vagrantApp'
       value -= value * $scope.heroLvlStats.coolDownReduction/100
     return value
   $scope.selectJunk = (num, slot)->
-    $scope.junkMods = {}
-    $scope.junkLvls[slot] = num
-    for slot in $scope.slots
-      mods = $scope.build.belt.junk[slot].mods.mod
-      for mod in mods
-        if parseInt(mod.point) is parseInt($scope.junkLvls[slot])
-          if $scope.junkMods[mod.stat]
-            $scope.junkMods[mod.stat] += parseInt(mod.value)
-          else
-            $scope.junkMods[mod.stat] = parseInt(mod.value)
+    if num >= 0
+      $scope.junkMods = {}
+      $scope.junkLvls[slot] = num
+      for slot in $scope.slots
+        mods = $scope.build.belt.junk[slot].mods.mod
+        for mod in mods
+          if parseInt(mod.point) is parseInt($scope.junkLvls[slot])
+            if $scope.junkMods[mod.stat]
+              $scope.junkMods[mod.stat] += parseInt(mod.value)
+            else
+              $scope.junkMods[mod.stat] = parseInt(mod.value)
 
-  $scope.junkLvls = {}
   $scope.maxJunkLvl = [4, 3, 2, 1]
   $scope.build = Builder.build
   $scope.lvl = 1
