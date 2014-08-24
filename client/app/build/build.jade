@@ -1,5 +1,7 @@
 div(ng-controller="BuildCtrl" ng-show = "isActive('/build')")
-	.ui.vertically.divided.grid
+	.ui.blue.header(ng-show="!build.hero") Select a Hero from the Heroes tab!
+	.ui.green.header(ng-show="!build.belt") Select a Backpack from the Backpacks tab!
+	.ui.vertically.divided.grid(ng-show="build.hero && build.belt")
 		.one.column.row
 			.column
 				h2.ui.header {{build.hero.playerData.playerDisplayName}} | {{build.hero.attackType}} | {{build.hero.role1}} {{build.hero.role2}}
@@ -12,38 +14,51 @@ div(ng-controller="BuildCtrl" ng-show = "isActive('/build')")
 							div Level
 							div(ng-repeat="(stat, conv) in convertTable" ng-if="!statsKeysExcludes[stat]") {{conv}}
 						.eight.wide.left.aligned.column
-							div {{lvl}}
+							span
+								input(ng-model="lvl")#levelInput
+							span
+								i.small.level.up.icon#levelUp(ng-click="lvlUp()")
+							span
+								i.small.level.down.icon#levelDown(ng-click="lvlDown()")
 							div(ng-repeat="(stat, conv) in convertTable") {{perLevelV1(stat)}} {{perLevel1(stat)}}
 			.twelve.wide.column
 				.ui.tiny.header#buildBeltName {{build.belt.name}}
 				div {{build.belt.description}}
+				.ui.divider
 				.item(ng-repeat="slot in slots")
 					//- How to refactor these long data getters?
 					//- Make a Backpack Controller? Performance issues?
-					img.ui.avatar.image(ng-src="{{build.belt.junk[slot].URL}}")
-					span {{build.belt.junk[slot].name}} 
-					//- div {{build.belt.junk[slot]}}
-					div 
-					span(ng-repeat-start="mod in mods" ng-show="build.belt.junk[slot][mod]") {{build.belt.junk[slot][mod]}}
-					span(ng-repeat-end ng-show="build.belt.junk[slot][mod]")  |  
+					.ui.grid
+						.two.column.row
+							.one.wide.column#levelBoxesColumn
+								div.lvlBoxes(ng-repeat="num in maxJunkLvl" ng-click="selectJunk(num, slot)" ng-class="{lvlHighlight: num <= junkLvls[slot]}")
+							.fifteen.wide.column
+								img.ui.avatar.image(ng-src="{{build.belt.junk[slot].URL}}")
+								span {{build.belt.junk[slot].name}} 
+								//- div {{build.belt.junk[slot]}}
+								div 
+								span(ng-repeat-start="mod in mods" ng-show="build.belt.junk[slot][mod]") {{build.belt.junk[slot][mod]}}
+								span(ng-repeat-end ng-show="build.belt.junk[slot][mod]")  |  
 					.ui.divider
 
 		.two.column.row
-
 			.eleven.wide.column
 				.ui.red.label Q 
 				span(ng-repeat="(stat, value) in build.hero.spell1" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
 				div {{build.hero.spell1.spellShortDescription}}
+				//- div {{build.hero.spell1}}
 				.ui.divider
 				.ui.green.label W 
 				span(ng-repeat="(stat, value) in build.hero.spell2" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
 				div {{build.hero.spell2.spellShortDescription}}
+				//- div {{build.hero.spell2}}
 				.ui.divider
 				.ui.white.label E 
 				span(ng-repeat="(stat, value) in build.hero.spell3" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
 				div {{build.hero.spell3.spellShortDescription}}
+				//- div {{build.hero.spell3}}
 				.ui.divider
 				.ui.blue.label Passive
 				span(ng-repeat="(stat, value) in build.hero.spell4" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
 				div {{build.hero.spell4.spellShortDescription}}
-	div {{build}}
+				//- div {{build.hero.spell4}}

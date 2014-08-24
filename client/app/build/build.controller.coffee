@@ -2,9 +2,28 @@
 
 angular.module 'vagrantApp'
 .controller 'BuildCtrl', ($scope, Builder) ->
+  $scope.slots = ['slot1', 'slot2', 'slot3', 'slot4']
+  $scope.junkMods = {}
+  $scope.selectJunk = (num, slot)->
+    $scope.junkMods = {}
+    $scope.junkLvls[slot] = num
+    for slot in $scope.slots
+      mods = $scope.build.belt.junk[slot].mods.mod
+      for mod in mods
+        if parseInt(mod.point) is parseInt($scope.junkLvls[slot])
+          if $scope.junkMods[mod.stat]
+            $scope.junkMods[mod.stat] += parseInt(mod.value)
+          else
+            $scope.junkMods[mod.stat] = parseInt(mod.value)
+
+  $scope.junkLvls = {}
+  $scope.maxJunkLvl = [4, 3, 2, 1]
   $scope.build = Builder.build
   $scope.lvl = 1
-  $scope.slots = ['slot1', 'slot2', 'slot3', 'slot4']
+  $scope.lvlUp = ->
+    $scope.lvl += 1
+  $scope.lvlDown = ->
+    $scope.lvl -= 1
   $scope.mods = ['modDescription1', 'modDescription2', 'modDescription3']
   $scope.perLevel1 = (stat)->
     actorStats = $scope.build.hero.actorStats
@@ -22,11 +41,14 @@ angular.module 'vagrantApp'
         lvl = 0
 
       if stat is 'attackSpeed'
-        return (parseInt(value) - lvl*actorStats[perLevelStat]).toString()
+        statValue = parseInt(value) + lvl*actorStats[perLevelStat]
       else
-        return (parseInt(value) + lvl*actorStats[perLevelStat]).toString()
+        statValue = parseInt(value) + lvl*actorStats[perLevelStat]
     else
-      return value
+      statValue = value
+    if $scope.junkMods[stat]
+      statValue += parseInt($scope.junkMods[stat])
+    return statValue.toString()
   $scope.avatarUrl = ->
     urlname = $scope.build.hero.name
     if urlname is 'flame'
@@ -46,19 +68,19 @@ angular.module 'vagrantApp'
     spellDuration: 'Duration'
   }
   $scope.convertTable = {
-    attackDamage: 'AD'
+    attackDamage: 'Attack'
     attackSpeed: 'AS'
     attackRange: 'Range'
     criticalChance: 'Crit %'
-    armorPenetration: 'Armor Pen'
+    armorPenetration: 'Armor Breach'
     armor: 'Armor'
     health: 'HP'
     healthRegen: 'HP Regen'
-    spellResist: 'MR'
-    spellDamage: 'AP'
+    spellResist: 'Shields'
+    spellDamage: 'Power'
     coolDownReduction: 'CDR'
     speed: 'Movespeed'
-    spellPenetration: 'Magic Pen'
+    spellPenetration: 'Shield Breach'
   }
 
   $scope.statsKeysExcludes = {
@@ -69,3 +91,4 @@ angular.module 'vagrantApp'
     spellVamp: true
     weaponType: true
   }
+

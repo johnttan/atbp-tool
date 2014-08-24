@@ -86,6 +86,6 @@ div(ng-controller="ChampionsCtrl" ng-show = "isActive('/champions')")
                 th.ui.mini(ng-click="setTableSort('collisionRadius')" ng-class="setTableClass('collisionRadius')") Collision Radius
         tbody
             tr(ng-repeat="actor in champs  | orderBy:getSortValue:reverseSort |filter:search track by actor.name")
-                td.ui.blue.tiny.header(ng-click="addBuild(actor)") {{actor.playerData.playerDisplayName}} lvl.{{lvl}}
+                td.ui.tiny.header(ng-click="addBuild(actor)" ng-class="selectHeroBuild(actor.name)") {{actor.playerData.playerDisplayName}} lvl.{{lvl}}
                 td(ng-repeat="(stat, conv) in convertTable") {{perLevelV(stat, actor.actorStats)}} {{perLevel(stat, actor.actorStats)}}
                 td  {{actor.collisionRadius}}
