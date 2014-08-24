@@ -1,7 +1,7 @@
 div(ng-controller="BuildCtrl" ng-show = "isActive('/build')")
 	.ui.blue.header(ng-show="!build.hero") Select a Hero from the Heroes tab!
 	.ui.green.header(ng-show="!build.belt") Select a Backpack from the Backpacks tab!
-	.ui.vertically.divided.grid(ng-show="build.hero && build.belt")
+	.ui.vertically.divided.grid(ng-if = "build.hero && build.belt")
 		.one.column.row
 			.column
 				h2.ui.header {{build.hero.playerData.playerDisplayName}} | {{build.hero.attackType}} | {{build.hero.role1}} {{build.hero.role2}}
@@ -44,21 +44,21 @@ div(ng-controller="BuildCtrl" ng-show = "isActive('/build')")
 		.two.column.row
 			.eleven.wide.column
 				.ui.red.label Q 
-				span(ng-repeat="(stat, value) in build.hero.spell1" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
+				span(ng-repeat="(stat, value) in build.hero.spell1" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{skillLvl(stat, value, build.hero.spell1)}} | 
 				div {{build.hero.spell1.spellShortDescription}}
 				//- div {{build.hero.spell1}}
 				.ui.divider
 				.ui.green.label W 
-				span(ng-repeat="(stat, value) in build.hero.spell2" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
+				span(ng-repeat="(stat, value) in build.hero.spell2" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{skillLvl(stat, value, build.hero.spell2)}} | 
 				div {{build.hero.spell2.spellShortDescription}}
 				//- div {{build.hero.spell2}}
 				.ui.divider
 				.ui.white.label E 
-				span(ng-repeat="(stat, value) in build.hero.spell3" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
+				span(ng-repeat="(stat, value) in build.hero.spell3" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{skillLvl(stat, value, build.hero.spell3)}} | 
 				div {{build.hero.spell3.spellShortDescription}}
 				//- div {{build.hero.spell3}}
 				.ui.divider
 				.ui.blue.label Passive
-				span(ng-repeat="(stat, value) in build.hero.spell4" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{value}} | 
+				span(ng-repeat="(stat, value) in build.hero.spell4" ng-show="spellKeys[stat]") {{spellKeys[stat]}} {{skillLvl(stat, value, build.hero.spell4)}} | 
 				div {{build.hero.spell4.spellShortDescription}}
 				//- div {{build.hero.spell4}}

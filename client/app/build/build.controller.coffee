@@ -4,6 +4,18 @@ angular.module 'vagrantApp'
 .controller 'BuildCtrl', ($scope, Builder) ->
   $scope.slots = ['slot1', 'slot2', 'slot3', 'slot4']
   $scope.junkMods = {}
+  $scope.heroLvlStats = {}
+  $scope.skillLvl = (stat, value, skill)->
+    console.log value
+    value = parseFloat(value)
+    ratio = parseFloat(skill.damageRatio)
+    if stat is 'damage' and ratio < 1
+      value += ratio * $scope.heroLvlStats.spellDamage
+      value = parseInt(value)
+    if stat is 'spellCoolDown'
+      value -= value * $scope.heroLvlStats.coolDownReduction/100
+    console.log value, stat, $scope.heroLvlStats
+    return value
   $scope.selectJunk = (num, slot)->
     $scope.junkMods = {}
     $scope.junkLvls[slot] = num
@@ -48,6 +60,7 @@ angular.module 'vagrantApp'
       statValue = value
     if $scope.junkMods[stat]
       statValue += parseInt($scope.junkMods[stat])
+    $scope.heroLvlStats[stat] = statValue
     return statValue.toString()
   $scope.avatarUrl = ->
     urlname = $scope.build.hero.name
