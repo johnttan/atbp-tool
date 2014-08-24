@@ -52,7 +52,7 @@ angular.module 'vagrantApp'
         lvl = 0
 
       if stat is 'attackSpeed'
-        statValue = parseInt(value) + lvl*actorStats[perLevelStat]
+        statValue = parseInt(value) - lvl*actorStats[perLevelStat]
       else
         statValue = parseInt(value) + lvl*actorStats[perLevelStat]
     else
