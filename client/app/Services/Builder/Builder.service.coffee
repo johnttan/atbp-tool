@@ -6,8 +6,11 @@ angular.module 'vagrantApp'
       constructor: (@$http)->
         @build = {}
         @junkURLs = {}
-      addHero: (hero)->
-      	@build.hero = hero
+      addHero: (hero, remove)->
+      	if remove
+      		@build.hero = undefined
+      	else
+      		@build.hero = hero
       addBelt: (belt)->
       	@build.belt = belt
 ]

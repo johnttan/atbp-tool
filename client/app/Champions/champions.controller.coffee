@@ -5,6 +5,7 @@ angular.module 'vagrantApp'
 .controller 'ChampionsCtrl', ($scope, Champions, Backpacks, Builder) ->
 
   $scope.lvl = 1
+  $scope.showHeroSelect = true
   $scope.sortButton = 'Reverse Order'
   $scope.champs = Champions.championsData
   $scope.grid = true
@@ -156,11 +157,17 @@ angular.module 'vagrantApp'
       $scope.sortButton = 'Reverse Order'
     else
       $scope.sortButton = 'Use table headers to sort'
-  $scope.selectHero = (heroName)->
+  $scope.selectHero = (heroName, hero)->
     if $scope.searchQuery.name isnt heroName
       $scope.searchQuery.name = heroName
     else
       $scope.searchQuery.name = ''
+    if $scope.selectedHero isnt hero.name
+      $scope.selectedHero = hero.name
+      Builder.addHero(hero)
+    else
+      $scope.selectedHero = undefined
+      Builder.removeHero()
   $scope.heroButton = (heroName)->
     if $scope.searchQuery.name isnt heroName
       return 'blue'

@@ -2,7 +2,8 @@ div(ng-controller="ChampionsCtrl" ng-show = "isActive('/champions')")
     .ui.connected.items
         div#switchViewButtonItem.item
             .fluid.ui.green.button(ng-click="switchView()") Switch View
-            .fluid.ui.blue.button(ng-click="showHeroSelect = !showHeroSelect") Show Heroes
+            .fluid.ui.blue.button(ng-click="showHeroSelect = false" ng-show="showHeroSelect") Hide Heroes
+            .fluid.ui.blue.button(ng-click="showHeroSelect = true" ng-show="!showHeroSelect") Show Heroes
         .item
             div Search
             span.ui.mini.fluid.input
@@ -21,7 +22,7 @@ div(ng-controller="ChampionsCtrl" ng-show = "isActive('/champions')")
             .ui.pointing.left.label(ng-show="grid") {{order}}
 
     .ui.mini.horizontal.list(ng-show="showHeroSelect")
-        .item(ng-repeat="actor in champs track by actor.name" ng-click="selectHero(actor.playerData.playerDisplayName)")
+        .item(ng-repeat="actor in champs track by actor.name" ng-click="selectHero(actor.playerData.playerDisplayName, actor)")
             .ui.small.button(ng-class="heroButton(actor.playerData.playerDisplayName)") {{actor.playerData.playerDisplayName}}
     .ui.small.header(ng-show="!grid") Click on table headers to sort.
     .ui.small.blue.header(ng-show="grid") Click Hero avatar or blue headers to select Hero for Hero Builder
