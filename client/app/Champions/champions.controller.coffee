@@ -130,7 +130,10 @@ angular.module 'vagrantApp'
   $scope.perLevel = (stat, actorStats)->
     perLevelStat = stat + 'PerLevel'
     if actorStats[perLevelStat]
-      return ' (+' + actorStats[perLevelStat] + ')'
+      if stat is 'attackSpeed'
+        return ' (-' + actorStats[perLevelStat] + ')'
+      else
+        return ' (+' + actorStats[perLevelStat] + ')'
   $scope.perLevelV = (stat, actorStats)->
     value = actorStats[stat]
     perLevelStat = stat + 'PerLevel'

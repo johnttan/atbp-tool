@@ -40,7 +40,10 @@ angular.module 'vagrantApp'
     actorStats = $scope.build.hero.actorStats
     perLevelStat = stat + 'PerLevel'
     if actorStats[perLevelStat]
-      return ' (+' + actorStats[perLevelStat] + ')'
+      if stat is 'attackSpeed'
+        return ' (-' + actorStats[perLevelStat] + ')'
+      else
+        return ' (+' + actorStats[perLevelStat] + ')'
   $scope.perLevelV1 = (stat)->
     actorStats = $scope.build.hero.actorStats
     value = actorStats[stat]
