@@ -21,49 +21,6 @@ exports.index = function(req, res) {
     }
 };
 
-// Get a single champions
-exports.show = function(req, res) {
-  Champions.findById(req.params.id, function (err, champions) {
-    if(err) { return handleError(res, err); }
-    if(!champions) { return res.send(404); }
-    return res.json(champions);
-  });
-};
-
-// Creates a new champions in the DB.
-exports.create = function(req, res) {
-  Champions.create(req.body, function(err, champions) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, champions);
-  });
-};
-
-// Updates an existing champions in the DB.
-exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Champions.findById(req.params.id, function (err, champions) {
-    if (err) { return handleError(res, err); }
-    if(!champions) { return res.send(404); }
-    var updated = _.merge(champions, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, champions);
-    });
-  });
-};
-
-// Deletes a champions from the DB.
-exports.destroy = function(req, res) {
-  Champions.findById(req.params.id, function (err, champions) {
-    if(err) { return handleError(res, err); }
-    if(!champions) { return res.send(404); }
-    champions.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-    });
-  });
-};
-
 function handleError(res, err) {
   return res.send(500, err);
 }
