@@ -21,6 +21,8 @@ div(ng-controller="BuildCtrl" ng-show = "isActive('/build')")
 							span
 								i.small.level.down.icon#levelDown(ng-click="lvlDown()")
 							div(ng-repeat="(stat, conv) in convertTable") {{perLevelV1(stat)}} {{perLevel1(stat)}}
+							h4.ui.header From Backpack
+							div(ng-repeat="(stat, value) in junkMods") {{convertTable[stat]}} : {{value}}
 			.twelve.wide.column
 				.ui.tiny.header#buildBeltName {{build.belt.name}}
 				div {{build.belt.description}}

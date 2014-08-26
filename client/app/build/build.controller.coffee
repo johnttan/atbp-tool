@@ -16,7 +16,7 @@ angular.module 'vagrantApp'
       value -= value * $scope.heroLvlStats.coolDownReduction/100
     return value
   $scope.selectJunk = (num, slot)->
-    if num >= 0
+    if num >= 0 and num <= 4
       $scope.junkMods = {}
       $scope.junkLvls[slot] = num
       for slot in $scope.slots
@@ -24,9 +24,9 @@ angular.module 'vagrantApp'
         for mod in mods
           if parseInt(mod.point) is parseInt($scope.junkLvls[slot])
             if $scope.junkMods[mod.stat]
-              $scope.junkMods[mod.stat] += parseInt(mod.value)
+              $scope.junkMods[mod.stat] += parseFloat(mod.value)
             else
-              $scope.junkMods[mod.stat] = parseInt(mod.value)
+              $scope.junkMods[mod.stat] = parseFloat(mod.value)
 
   $scope.maxJunkLvl = [4, 3, 2, 1]
   $scope.build = Builder.build
@@ -46,7 +46,7 @@ angular.module 'vagrantApp'
         return ' (+' + actorStats[perLevelStat] + ')'
   $scope.perLevelV1 = (stat)->
     actorStats = $scope.build.hero.actorStats
-    value = actorStats[stat]
+    value = parseFloat(actorStats[stat])
     perLevelStat = stat + 'PerLevel'
     if actorStats[perLevelStat]
       if $scope.lvl > 0
@@ -55,15 +55,15 @@ angular.module 'vagrantApp'
         lvl = 0
 
       if stat is 'attackSpeed'
-        statValue = parseInt(value) - lvl*actorStats[perLevelStat]
+        statValue = value - lvl*parseFloat(actorStats[perLevelStat])
       else
-        statValue = parseInt(value) + lvl*actorStats[perLevelStat]
+        statValue = value + lvl*parseFloat(actorStats[perLevelStat])
     else
       statValue = value
     if $scope.junkMods[stat]
-      statValue += parseInt($scope.junkMods[stat])
+      statValue += parseFloat($scope.junkMods[stat])
     $scope.heroLvlStats[stat] = statValue
-    return statValue.toString()
+    return statValue.toFixed(2).toString()
   $scope.avatarUrl = ->
     urlname = $scope.build.hero.name
     if urlname is 'flame'
